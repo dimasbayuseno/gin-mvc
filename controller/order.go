@@ -10,12 +10,20 @@ import (
 )
 
 func GetAllOrders(c *gin.Context) {
-	var users []model.Order
+	var orders []model.Order
 	pagination := utils.GeneratePaginationFromRequest(c)
 	offset := (pagination.Page - 1) * pagination.Limit
-	db.DB.Limit(pagination.Limit).Offset(offset).Order(pagination.Sort).Find(&users)
+	db.DB.Limit(pagination.Limit).Offset(offset).Order(pagination.Sort).Find(&orders)
 
-	c.JSON(http.StatusOK, users)
+	c.JSON(http.StatusOK, orders)
+}
+
+func SearchOrders(c *gin.Context) {
+	var orders []model.Order
+	searchQuery := "%" + c.Query("search") + "%"
+	db.DB.Find(&orders).Where("item_name LIKE ?", searchQuery)
+
+	c.JSON(http.StatusOK, orders)
 }
 
 func GetOrderByID(c *gin.Context) {

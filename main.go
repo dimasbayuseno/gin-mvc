@@ -59,16 +59,18 @@ func main() {
 	auth.Use(authMiddleware.MiddlewareFunc())
 	{
 		auth.GET("/users", controller.GetAllUsers)
+		auth.GET("/users/search", controller.SearchUsers)
 		auth.GET("/user", controller.GetUserByID)
 		auth.PATCH("/user/patch", controller.UpdateUserByID)
 		auth.DELETE("/user/delete", controller.DeleteUserByID)
 		auth.POST("/user", controller.PostUser)
 
-		auth.GET("/users", controller.GetAllOrders)
-		auth.GET("/user", controller.GetOrderByID)
-		auth.PATCH("/user/patch", controller.UpdateOrderByID)
-		auth.DELETE("/user/delete", controller.DeleteOrderByID)
-		auth.POST("/user", controller.PostOrder)
+		auth.GET("/orders", controller.GetAllOrders)
+		auth.GET("/orders/search", controller.SearchOrders)
+		auth.GET("/order", controller.GetOrderByID)
+		auth.PATCH("/order/patch", controller.UpdateOrderByID)
+		auth.DELETE("/order/delete", controller.DeleteOrderByID)
+		auth.POST("/order", controller.PostOrder)
 	}
 
 	log.Fatal(r.Run(":" + port))

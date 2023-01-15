@@ -3,10 +3,13 @@ package main
 import (
 	"gin-mvc/controller"
 	"gin-mvc/db"
+	"gin-mvc/middleware"
+	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"log"
 	"os"
+	"time"
 )
 
 func main() {
@@ -20,9 +23,36 @@ func main() {
 
 	db.SetupDatabaseConnection()
 
+	authMiddleware, err := jwt.New(&jwt.GinJWTMiddleware{
+		Realm:           "product-api",
+		Key:             []byte("secret key"),
+		Timeout:         time.Hour,
+		MaxRefresh:      time.Hour,
+		IdentityKey:     middleware.IdentityKey,
+		PayloadFunc:     middleware.PayloadFunc,
+		IdentityHandler: middleware.IdentityHandler,
+		Authenticator:   middleware.Authenticator,
+		Authorizator:    middleware.Authorizator,
+		Unauthorized:    middleware.Unauthorized,
+		TokenLookup:     "header: Authorization, query: token, cookie: jwt",
+		TokenHeadName:   "Bearer",
+		SendCookie:      true,
+	})
+
+	if err != nil {
+		log.Fatal("JWT Error:" + err.Error())
+	}
+
+	errInit := authMiddleware.MiddlewareInit()
+	if errInit != nil {
+		log.Fatal("authMiddleware.MiddlewareInit() Error:" + errInit.Error())
+	}
+
 	r.Use(CORSMiddleware())
 
 	r.GET("/hello-world", controller.HelloWorld)
+	r.POST("/register", controller.Register)
+	r.POST("/login", authMiddleware.LoginHandler)
 
 	log.Fatal(r.Run(":" + port))
 }

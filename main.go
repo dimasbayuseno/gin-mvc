@@ -55,6 +55,16 @@ func main() {
 	r.POST("/login", authMiddleware.LoginHandler)
 	r.GET("/logout", authMiddleware.LogoutHandler)
 
+	auth := r.Group("")
+	auth.Use(authMiddleware.MiddlewareFunc())
+	{
+		auth.GET("/users", controller.GetAllUsers)
+		auth.GET("/user", controller.GetUserByID)
+		auth.PATCH("/user/patch", controller.UpdateUserByID)
+		auth.DELETE("/user/delete", controller.DeleteUserByID)
+		auth.POST("/user", controller.PostUser)
+	}
+
 	log.Fatal(r.Run(":" + port))
 }
 

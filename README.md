@@ -1,6 +1,10 @@
 # simple-crud-product
 CRUD Product with JWT Auth
 
+### How to run
+ - Simply run command "go run main.go" on root folder, or
+ - docker-compose up
+
 - ### Start with docker compose up  
   (already featured with database automigrate)
 - ### Test the API using postman collection + environment

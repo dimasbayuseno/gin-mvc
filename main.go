@@ -63,6 +63,12 @@ func main() {
 		auth.PATCH("/user/patch", controller.UpdateUserByID)
 		auth.DELETE("/user/delete", controller.DeleteUserByID)
 		auth.POST("/user", controller.PostUser)
+
+		auth.GET("/users", controller.GetAllOrders)
+		auth.GET("/user", controller.GetOrderByID)
+		auth.PATCH("/user/patch", controller.UpdateOrderByID)
+		auth.DELETE("/user/delete", controller.DeleteOrderByID)
+		auth.POST("/user", controller.PostOrder)
 	}
 
 	log.Fatal(r.Run(":" + port))

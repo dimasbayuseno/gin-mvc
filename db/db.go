@@ -33,6 +33,7 @@ func SetupDatabaseConnection() *gorm.DB {
 
 	database.AutoMigrate(&model.User{})
 	database.AutoMigrate(&model.UserActivity{})
+	database.AutoMigrate(&model.Order{})
 
 	DB = database
 	return DB

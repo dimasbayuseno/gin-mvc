@@ -21,7 +21,7 @@ func GetAllOrders(c *gin.Context) {
 func SearchOrders(c *gin.Context) {
 	var orders []model.Order
 	searchQuery := "%" + c.Query("search") + "%"
-	db.DB.Find(&orders).Where("item_name LIKE ?", searchQuery)
+	db.DB.Where("item_name LIKE ?", searchQuery).Find(&orders)
 
 	c.JSON(http.StatusOK, orders)
 }

@@ -39,8 +39,7 @@ func GetAllUsers(c *gin.Context) {
 func SearchUsers(c *gin.Context) {
 	var users []model.User
 	searchQuery := "%" + c.Query("search") + "%"
-	db.DB.Find(&users).Where("fullname LIKE ?", searchQuery)
-
+	db.DB.Where("fullname LIKE ?", searchQuery).Find(&users)
 	c.JSON(http.StatusOK, users)
 }
 

@@ -10,3 +10,6 @@ CRUD Product with JWT Auth
   
   ### ERD
 <img width="824" alt="Screenshot 2023-01-15 at 22 32 17" src="https://user-images.githubusercontent.com/117537461/212552947-b01e6fc0-651f-4207-93eb-c3dfb1b44db2.png">
+
+### Documentation
+  - Already provided in postman_collection directory (https://github.com/dimasbayuseno/gin-mvc/tree/master/postman_collection)

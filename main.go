@@ -24,7 +24,7 @@ func main() {
 	db.SetupDatabaseConnection()
 
 	authMiddleware, err := jwt.New(&jwt.GinJWTMiddleware{
-		Realm:           "product-api",
+		Realm:           "gin-mvc",
 		Key:             []byte("secret key"),
 		Timeout:         time.Hour,
 		MaxRefresh:      time.Hour,
@@ -53,6 +53,7 @@ func main() {
 	r.GET("/hello-world", controller.HelloWorld)
 	r.POST("/register", controller.Register)
 	r.POST("/login", authMiddleware.LoginHandler)
+	r.GET("/logout", authMiddleware.LogoutHandler)
 
 	log.Fatal(r.Run(":" + port))
 }

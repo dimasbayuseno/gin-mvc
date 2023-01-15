@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"gin-mvc/model"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -29,6 +30,9 @@ func SetupDatabaseConnection() *gorm.DB {
 	if err != nil {
 		panic("Failed to connect database")
 	}
+
+	database.AutoMigrate(&model.User{})
+	database.AutoMigrate(&model.UserActivity{})
 
 	DB = database
 	return DB

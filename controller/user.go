@@ -20,7 +20,6 @@ func Register(c *gin.Context) {
 		Username: input.Username,
 		Password: input.Password,
 		Fullname: input.Fullname,
-		Role:     input.Role,
 	}
 	db.DB.Create(&user)
 

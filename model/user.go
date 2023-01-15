@@ -7,7 +7,6 @@ type User struct {
 	Username string
 	Password string
 	Fullname string
-	Role     string
 }
 
 type UserModel struct {
